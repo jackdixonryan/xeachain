@@ -62,15 +62,10 @@ class Ledger {
   }
 
   proofOfWork(lastProof) {
-    console.time("prove");
     let proof = 0;
     while (!this.validProof(lastProof, proof)) {
       proof += 1;
-      if (proof % 1000000 === 0) {
-        console.log(`${proof} combinations tried.`)
-      }
     }
-    console.timeEnd("prove");
     return proof;
   }
 
