@@ -49,9 +49,10 @@ class Ledger {
 
   hash(block) {
     // to ORDER the object? I don't know if I understand this. The article I'm following is for Python and they're using json.dumps with a sortKeys fn.
-    const blockString = JSON.stringify(block);
+    const blockString = JSON.stringify(Object.fromEntries(block));
     // generates a hash for the stringified map
-    const hash = crypto.createHash("sha256", blockString);
+    const hash = crypto.createHash("sha256");
+    hash.update(blockString);
     return hash.digest("hex");
   }
 
