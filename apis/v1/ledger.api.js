@@ -65,11 +65,18 @@ const ledgerApi = (function buildApi() {
     });
   }
 
+  async function validate(req, res, next) {
+    res.send({
+      isValid: ledger.validChain
+    })
+  }
+
   const router = express.Router();
 
   router.get("/mine", mine);
   router.post('/transact', transact);
   router.get('/chain', chain);
+  router.get('/chain/validate', validate);
   return router;
 })();
 
