@@ -49,7 +49,14 @@ class Ledger {
 
   hash(block) {
     // to ORDER the object? I don't know if I understand this. The article I'm following is for Python and they're using json.dumps with a sortKeys fn.
-    const blockString = JSON.stringify(Object.fromEntries(block));
+    const clone = new Map();
+    clone.set('index', block.get('index'));
+    clone.set('timestamp', block.get('timestamp'));
+    clone.set('transactions', block.get('transactions'));
+    clone.set('proof', block.get('proof'));
+    clone.set('previousHash', block.get('previousHash'));
+
+    const blockString = JSON.stringify(Object.fromEntries(clone));
     // generates a hash for the stringified map
     const hash = crypto.createHash("sha256");
     hash.update(blockString);
@@ -73,13 +80,38 @@ class Ledger {
     const guess = `${lastProof}${proof}`;
     const guessHash = crypto.createHash("sha256");
     const hexDigest = guessHash.update(guess).digest("hex");
-    const firstFour = hexDigest.slice(0, 6);
-    if (firstFour === "000000") {
+    const firstFour = hexDigest.slice(0, 4);
+    if (firstFour === "0000") {
       console.log(proof);
       return true;
     } else {
       return false;
     }
+  }
+
+  get validChain() {
+    let previousBlock = this.chain[0];
+    let currentIndex = 1;
+    while (currentIndex < this.chain.length) {
+      const block = this.chain[currentIndex];
+      if (block.get('previousHash') !== this.hash(previousBlock)) {
+        console.log("Block previous hash doesn't match the hash of the previous block.")
+        console.log(block.get('previousHash'));
+        console.log(this.hash(previousBlock));
+        return false;
+      }
+      
+      if (!this.validProof(previousBlock.get('proof'), block.get('proof'))) {
+        console.log("The proof is invalid.")
+        return false;
+      }
+
+      previousBlock = block;
+      currentIndex += 1;
+
+    }
+
+    return true
   }
 }
 
