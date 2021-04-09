@@ -1,0 +1,20 @@
+{
+  "name": "xemithus",
+  "version": "1.0.0",
+  "description": "Welcome to the dynamic colony of xemithus. You are the expenser of a colonial ship over the new planet, and it is your job to create and build a successful colony. That is the goal. Good luck.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.2"
+  }
+}
