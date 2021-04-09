@@ -3,6 +3,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import v1 from "./apis/v1/index.js";
 import dotenv from 'dotenv';
+import cors from "cors";
 
 (async function buildServer() {
   "use strict";
@@ -13,6 +14,7 @@ import dotenv from 'dotenv';
   app.use(express.json());
   app.use(helmet());
   app.use(morgan('dev'));
+  app.use(cors());
 
   // routes
   app.use('/v1', v1);
