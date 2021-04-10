@@ -62,13 +62,8 @@ const ledgerApi = (function buildApi() {
     res.send({
       chain,
       length: ledger.chain.length,
+      valid: ledger.validChain
     });
-  }
-
-  async function validate(req, res, next) {
-    res.send({
-      isValid: ledger.validChain
-    })
   }
 
   const router = express.Router();
@@ -76,7 +71,6 @@ const ledgerApi = (function buildApi() {
   router.get("/mine", mine);
   router.post('/transact', transact);
   router.get('/chain', chain);
-  router.get('/chain/validate', validate);
   return router;
 })();
 
