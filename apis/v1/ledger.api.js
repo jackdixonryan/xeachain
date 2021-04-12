@@ -66,11 +66,18 @@ const ledgerApi = (function buildApi() {
     });
   }
 
+  async function go(req, res, next) {
+    res.send({
+      message: 'you betcha'
+    })
+  }
+
   const router = express.Router();
 
   router.get("/mine", mine);
   router.post('/transact', transact);
   router.get('/chain', chain);
+  router.get('/go', go);
   return router;
 })();
 
