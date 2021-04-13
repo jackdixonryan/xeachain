@@ -31,28 +31,6 @@ const ledgerApi = (function buildApi() {
       });
   }
 
-  async function transact(req, res, next) {
-    const { body } = req;
-    const { transactions } = body;
-    let index;
-    if (!transactions) {
-      res.status(400).send({ message: "Transactions array is required. " });
-    } else {
-      transactions.forEach((transaction) => {
-        try {
-          const t = new Transaction(transaction);
-          index = ledger.transact(transaction);
-        } catch (error) {
-          res.status(400).send({ message: "amount, sender, and amount are required fields.", transaction });
-        }
-      });
-      res.status(201).send({
-        transactionsReceived: transactions.length,
-        blockIndex: index
-      });
-    }
-  }
-
   async function chain(req, res, next) {
     // the blocks will not directly translate to JSON a la objects, they must be transformed into objects, then sent..
     const chain = ledger.chain.map((block) => {
@@ -75,9 +53,8 @@ const ledgerApi = (function buildApi() {
   const router = express.Router();
 
   router.get("/mine", mine);
-  router.post('/transact', transact);
   router.get('/chain', chain);
-  
+
   return router;
 })();
 
