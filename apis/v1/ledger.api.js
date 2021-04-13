@@ -77,7 +77,7 @@ const ledgerApi = (function buildApi() {
   router.get("/mine", mine);
   router.post('/transact', transact);
   router.get('/chain', chain);
-  router.get('/go', go);
+  
   return router;
 })();
 

@@ -18,7 +18,6 @@ import cors from "cors";
 
   // routes
   app.use('/v1', v1);
-  app.use('/v2', v1);
 
   app.listen(process.env.PORT, () => {
     const data = {
